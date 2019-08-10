@@ -20,7 +20,6 @@ async def get_bytes(url):
 @app.route("/classify-url", methods=["GET"])
 async def classify_page(request):
     bytes = await get_bytes(request.query_params["url"])
-    image_url = request.query_params["url"]
     img = open_image(BytesIO(bytes))
     res, _, losses = learner.predict(img)
     return HTMLResponse('<html>' +
@@ -33,7 +32,6 @@ async def classify_page(request):
                                             key=lambda p: p[1],
                                             reverse=True)) +
                                 '</p>' +
-                                '<img src="">' +
                             '</body>' +
                         '</html>'
                         )
